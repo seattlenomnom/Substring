@@ -1,0 +1,9 @@
+/* README for substring
+*   Extract a portion of a character string. Use a function,
+* substring(source, start, count, result) where:
+*   source is the charcter string from which you are extracting the substring.
+*   start is the index into source where the substring begins.
+*   count is the number of characters to be extracted from source.
+*   result is the substring.
+*
+*/
