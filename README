@@ -9,4 +9,7 @@
 * 08/09/2022 test fgets result. puts used to test fgets. Printf used with
 * fgets gives me a leading blank on printing to screen.
 *
+* 08/09/2022 Got sub_string to work. Program works, needs testing.
+*
+*
 */
