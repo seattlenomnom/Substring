@@ -23,6 +23,8 @@
  * don't "initialize" the strings.
  *
  * added string length capability.
+ *
+ * rewrote sub_string();
 */
 
 #include <stdio.h>
@@ -47,18 +49,19 @@ int main(int argc, char *argv[]) {
 
     char string[MAX_LENGTH], character;
     char result[MAX_LENGTH];
-    int start, count;
-    int index, length;
+    int start_index, count;
+    int index, length, end_index;
     index = 0;
-    start = 0;
+    start_index = 0;
     count = 0;
     length = 0;
+    end_index = 0;
 
 
     /* input */
         /* get a string from the user */
 
-    puts(string_prompt);
+    puts(string_prompt);    /* leave here, but learn to use properly */
     index = 0;
     do {
         character = getchar();
@@ -67,13 +70,10 @@ int main(int argc, char *argv[]) {
     } while((character != '\n') && (index <= MAX_LENGTH - 2));
     string[index - 1] = '\0';
 
-    printf("The string is:\n");
-    printf("%s\n", string);
 
         /* get the parameters of the substring from the user */
     puts(param_prompt);
-    scanf("%i %i", &start, &count);
-    printf("start = %i, count = %i\n", start, count);
+    scanf("%i %i", &start_index, &count);
 
 
     /* determine string length */
@@ -82,34 +82,24 @@ int main(int argc, char *argv[]) {
     while((string[index] != '\0'))
         ++index;
     length = index;
-    printf("string lenght is %i\n", length);
 
 
+    /* check start, count, and length for values */
 
+    end_index = length - 1;
 
+    if(start_index + count <= end_index) {
 
+    sub_string(string, start_index, count, result);
 
-    /* check start and count for values */
+    }
 
-
-
-
-
-
-
-
-
-
-
-    /* process */
-
-/*    sub_string(string, start, count, result); */
 
     /* output */
 
-        /* output the substring (with a lable ) to the screen */
 
-/*    puts(result);  */
+    printf("The substring is:\n");
+    printf("%s\n", result);
 
 
     return(0);
@@ -117,26 +107,36 @@ int main(int argc, char *argv[]) {
 
 
 
-void sub_string(const char string[], int start,
+void sub_string(const char string[], int start_index,
         int count, char result[]) {
 
-    int i, j;
-    size_t length;
+    int i, j, index, end_index;
+    char length;
     i = 0;
     j = 0;
     length = 0;
+    end_index = 0;
 
     /* check parameters, if odd perform something reasonalble */
 
-    /* determine length of string */
+    /* determine length of string, calculate end_index */
+    index = 0;
+    while(string[index] != '\0')
+        ++index;
+    length = index;
+    end_index = length - 1;
 
-    length = strlen(string);
-    if(length < (count + start))
-        count = length - start;
+    /* create result[] */
 
-    for(i = start, j = 0; i <= count; ++i, ++j)
-        result[j] = string[i];
-    result[j + 1] = '\0';
+    if(start_index + count <= end_index) {
+        i = 0;
+        while(i <= count) {
+            result[i] = string[i + start_index];
+            ++i;
+        };
+    }
+
+
 
 
 }
