@@ -21,6 +21,8 @@
  * functions and their proper use.
  *
  * don't "initialize" the strings.
+ *
+ * added string length capability.
 */
 
 #include <stdio.h>
@@ -46,8 +48,7 @@ int main(int argc, char *argv[]) {
     char string[MAX_LENGTH], character;
     char result[MAX_LENGTH];
     int start, count;
-    int index;
-    size_t length;
+    int index, length;
     index = 0;
     start = 0;
     count = 0;
@@ -73,6 +74,20 @@ int main(int argc, char *argv[]) {
     puts(param_prompt);
     scanf("%i %i", &start, &count);
     printf("start = %i, count = %i\n", start, count);
+
+
+    /* determine string length */
+
+    index = 0;
+    while((string[index] != '\0'))
+        ++index;
+    length = index;
+    printf("string lenght is %i\n", length);
+
+
+
+
+
 
     /* check start and count for values */
 

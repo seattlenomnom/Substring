@@ -26,5 +26,6 @@
 *
 * don't "initialize" the strings.
 *
-*
+* added string length capability.
+
 */
