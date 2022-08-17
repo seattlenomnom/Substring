@@ -7,13 +7,26 @@
  * fgets gives me a leading blank on printing to screen.
  *
  * 08/09/2022 Got sub_string to work. Program works, needs testing.
+ * 08/09/2022 put parameter checks into sub_string. I'm not understanding
+ * how strlen() and size_t work. Fire up and praactice GDB.
  *
+ * 08/16/2022
+ * ok, complicated situation: stripped out all the more advanced c library
+ * string functions. use getchar() to get a character from the console, then
+ * use do...while to create the string.
+ *
+ * max_length changed to 81. eighty for the string one for the \0.
+ *
+ * use puts() for message strings, but i need to study c libray string
+ * functions and their proper use.
+ *
+ * don't "initialize" the strings.
 */
 
 #include <stdio.h>
 #include <string.h>
 
-#define MAX_LENGTH 80
+#define MAX_LENGTH 81
 const char string_prompt[] = "Enter string: ";
 const char param_prompt[] = "Enter start and count: ";
 
@@ -30,23 +43,36 @@ void sub_string(const char string[], int start,
 
 int main(int argc, char *argv[]) {
 
-    char string[MAX_LENGTH + 1];
-    char result[MAX_LENGTH + 1];
+    char string[MAX_LENGTH], character;
+    char result[MAX_LENGTH];
     int start, count;
     int index;
+    size_t length;
     index = 0;
     start = 0;
     count = 0;
-    for(index = 0; index <= 79; ++index)
-        result[index] = '\b';
+    length = 0;
+
+
     /* input */
         /* get a string from the user */
+
     puts(string_prompt);
-    fgets(string, MAX_LENGTH, stdin);
+    index = 0;
+    do {
+        character = getchar();
+        string[index] = character;
+        ++index;
+    } while((character != '\n') && (index <= MAX_LENGTH - 2));
+    string[index - 1] = '\0';
+
+    printf("The string is:\n");
+    printf("%s\n", string);
 
         /* get the parameters of the substring from the user */
     puts(param_prompt);
     scanf("%i %i", &start, &count);
+    printf("start = %i, count = %i\n", start, count);
 
     /* check start and count for values */
 
@@ -62,13 +88,13 @@ int main(int argc, char *argv[]) {
 
     /* process */
 
-    sub_string(string, start, count, result);
+/*    sub_string(string, start, count, result); */
 
     /* output */
 
         /* output the substring (with a lable ) to the screen */
 
-    puts(result);
+/*    puts(result);  */
 
 
     return(0);
@@ -80,8 +106,18 @@ void sub_string(const char string[], int start,
         int count, char result[]) {
 
     int i, j;
+    size_t length;
     i = 0;
     j = 0;
+    length = 0;
+
+    /* check parameters, if odd perform something reasonalble */
+
+    /* determine length of string */
+
+    length = strlen(string);
+    if(length < (count + start))
+        count = length - start;
 
     for(i = start, j = 0; i <= count; ++i, ++j)
         result[j] = string[i];
