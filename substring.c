@@ -84,15 +84,11 @@ int main(int argc, char *argv[]) {
     length = index;
 
 
-    /* check start, count, and length for values */
-
     end_index = length - 1;
 
-    if(start_index + count <= end_index) {
 
     sub_string(string, start_index, count, result);
 
-    }
 
 
     /* output */
@@ -118,26 +114,29 @@ void sub_string(const char string[], int start_index,
     end_index = 0;
 
     /* check parameters, if odd perform something reasonalble */
+/* determine length of string, calculate end_index */
 
-    /* determine length of string, calculate end_index */
     index = 0;
     while(string[index] != '\0')
         ++index;
     length = index;
     end_index = length - 1;
 
+    /* check start_index, end_index, and count for consistency */
+
+    if(start_index > end_index)
+        start_index = end_index;
+    else if((start_index + count) > end_index)
+        count = end_index - start_index;
+
+
     /* create result[] */
 
-    if(start_index + count <= end_index) {
-        i = 0;
-        while(i <= count) {
-            result[i] = string[i + start_index];
-            ++i;
-        };
-    }
-
-
-
+    i = 0;
+    while(i <= count){
+        result[i] = string[i + start_index];
+        ++i;
+    };
 
 }
 
